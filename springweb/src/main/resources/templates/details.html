@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${title}">Document</title>
+</head>
+<body>
+    <h1 th:text="${title}"></h1>
+    <ul>
+        <li th:text="${user.name}"></li>
+        <li th:text="${user.lastName}"></li>
+        <li th:if="${user.email}" th:text="${user.email}"></li>
+        <li th:if="${user.email == null}" th:text="${'No tiene contenido'}"></li>
+    </ul>
+    <a th:href="@{/list}">Ver listado</a>
+    <br>
+    <a th:href="@{/api/params/query(message=${title})}">Ver mensaaje</a>
+    <br>
+    <a th:href="@{/api/params/multiquery(text='Este es un texto', code=12345)}">Multiquery</a>
+    <br>
+    <a th:href="@{/api/var/bar/Un path variable}">Un path variable</a>
+    <br>
+    <a th:href="@{'/api/var/bar/' + ${title} + ', lo concadene'}">Un path variable concadenado</a>
+</body>
+</html>s

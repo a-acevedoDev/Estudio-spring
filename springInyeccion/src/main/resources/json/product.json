@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Play 5",
+    "price": 1000
+  },
+  {
+    "id": 2,
+    "name": "Pantalon Americanino",
+    "price": 350
+  },
+  {
+    "id": 3,
+    "name": "Churu para gato",
+    "price": 30
+  },
+  {
+    "id": 4,
+    "name": "Raton juguete",
+    "price": 170
+  }
+]
