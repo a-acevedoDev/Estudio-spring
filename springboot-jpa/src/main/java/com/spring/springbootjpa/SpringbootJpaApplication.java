@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -27,7 +28,65 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        personalizedQueriesBetween();
+        subQueries();
+    }
+
+    @Transactional(readOnly = true)
+    public void subQueries() {
+        System.out.println("Sub consulta por el nombre mas corto y su largo");
+        List<Object[]> list = personRepository.getShorterName();
+        list.forEach(objects -> System.out.println("Nombre: " + objects[0] + " Largo: " + objects[1]));
+
+        System.out.println("Sub consulta persona con el id mas alto");
+        Optional<Person> optionalPerson = personRepository.getLastRegistration();
+        optionalPerson.ifPresent(System.out::println);
+
+        System.out.println("Consulta con WHERE IN");
+        List<Person> personList = personRepository.getPersonById(Arrays.asList(1L, 3L, 8L, 10L));
+        personList.forEach(System.out::println);
+    }
+
+    @Transactional(readOnly = true)
+    public void queriesFunctionAggregation() {
+        System.out.println("Funcion total personas");
+        Long total = personRepository.totalPerson();
+        System.out.println(total);
+
+        System.out.println("Funcion min id");
+        Long min = personRepository.minId();
+        System.out.println(min);
+
+        System.out.println("Funcion max id");
+        Long max = personRepository.maxId();
+        System.out.println(max);
+
+        System.out.println("Largo del nombre");
+        List<Object[]> list = personRepository.lengthNamePersons();
+        list.forEach(objects -> System.out.println("Nombre: " + objects[0] + " Largo: " + objects[1]));
+
+        System.out.println("Minimo largo de nombre");
+        int minLenght = personRepository.minLenghtName();
+        System.out.println(minLenght);
+
+        System.out.println("Maximo largo de nombre");
+        int maxLenght = personRepository.maxLenghtName();
+        System.out.println(maxLenght);
+    }
+
+
+    @Transactional
+    public void personalizedQueriesAndDefaultJpa() {
+        System.out.println("Consulta todas las personas personalizada ORDER BY");
+        List<Person> personList = personRepository.getAll();
+        personList.forEach(System.out::println);
+
+        System.out.println("Consulta todas las personas personalizada ORDER BY DESC");
+        List<Person> personListDesc = personRepository.getAllNameLastnameDesc();
+        personListDesc.forEach(System.out::println);
+
+        System.out.println("Consulta todas las personas nombre ASC, apellido DESC por JPA");
+        List<Person> persons= personRepository.findAllByOrderByNameAscLastnameDesc();
+        persons.forEach(System.out::println);
     }
 
     @Transactional(readOnly = true)

@@ -10,6 +10,49 @@ import java.util.Optional;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+    @Query("SELECT p FROM Person p WHERE p.id IN ?1")
+    List<Person> getPersonById(List<Long> ids);
+
+    @Query("SELECT p.name, LENGTH(p.name) FROM Person p WHERE LENGTH(p.name) = (SELECT MIN(LENGTH(p.name)) FROM Person p)")
+    List<Object[]> getShorterName();
+
+    @Query("SELECT p from Person p WHERE p.id=(SELECT MAX(p.id) FROM Person p)")
+    Optional<Person> getLastRegistration();
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Query("SELECT p.name, LENGTH(p.name) FROM Person p")
+    List<Object[]> lengthNamePersons();
+
+    @Query("SELECT MIN(LENGTH(p.name)) FROM Person p")
+    int minLenghtName();
+
+    @Query("SELECT MAX(LENGTH(p.name)) FROM Person p")
+    int maxLenghtName();
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Query("SELECT COUNT(p) FROM Person p")
+    Long totalPerson();
+
+    @Query("SELECT MIN(p.id) FROM Person p")
+    Long minId();
+
+    @Query("SELECT MAX(p.id) FROM Person p")
+    Long maxId();
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Query("SELECT p FROM Person p ORDER BY p.name")
+    List<Person> getAll();
+
+    @Query("SELECT p FROM Person p ORDER BY p.name, p.lastname DESC")
+    List<Person> getAllNameLastnameDesc();
+
+    List<Person> findAllByOrderByNameAscLastnameDesc();
+
+    //------------------------------------------------------------------------------------------------------------------
+
     @Query("SELECT p FROM Person p WHERE  p.id BETWEEN ?1 AND ?2 ORDER BY p.name")
     List<Person> findAllByIdBetweenOrderBy(Long id1, Long id2);
 
