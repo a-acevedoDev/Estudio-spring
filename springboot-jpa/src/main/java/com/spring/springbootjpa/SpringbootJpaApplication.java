@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        subQueries();
+        create();
     }
 
     @Transactional(readOnly = true)
@@ -203,7 +204,7 @@ public class SpringbootJpaApplication implements CommandLineRunner {
         String programmingLanguage = scanner.next();
         scanner.close();
 
-        Person person = new Person(null, name, lastname, programmingLanguage);
+        Person person = new Person(name, lastname, programmingLanguage);
         Person personNew = personRepository.save(person);
         System.out.println(personNew.getId() + " " + personNew.getName() + " " + personNew.getProgrammingLanguage());
 

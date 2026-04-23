@@ -21,19 +21,29 @@ public class Person {
     private String lastname;
     @Column(name = "programming_language") // Personaliza la columna/atributo, en este caso el nombre por convencion de base de datos (snakecase).
     private String programmingLanguage;
+    @Embedded
+    private Audit audit = new Audit(); // MUY IMPORTANTE INICIALIZAR LA CLASE EMBEDDED EN EL ATRIBUTO O EN EL CONSTRUCTOR.
 
     public Person(String name, String lastname) {
         this.name = name;
         this.lastname = lastname;
     }
 
+    public Person(String name, String lastname, String programmingLanguage) {
+        this.name = name;
+        this.lastname = lastname;
+        this.programmingLanguage = programmingLanguage;
+    }
+
     @Override
     public String toString() {
-        return "{" +
+        return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", programmingLanguage='" + programmingLanguage + '\'' +
+                ", auditcreate=" + audit.getCreateAt() +
+                ", auditupdate" + audit.getUpdateAt() +
                 '}';
     }
 }
