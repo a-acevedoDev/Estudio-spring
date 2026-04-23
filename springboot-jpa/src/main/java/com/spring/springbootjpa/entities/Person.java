@@ -21,4 +21,19 @@ public class Person {
     private String lastname;
     @Column(name = "programming_language") // Personaliza la columna/atributo, en este caso el nombre por convencion de base de datos (snakecase).
     private String programmingLanguage;
+
+    public Person(String name, String lastname) {
+        this.name = name;
+        this.lastname = lastname;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", programmingLanguage='" + programmingLanguage + '\'' +
+                '}';
+    }
 }
