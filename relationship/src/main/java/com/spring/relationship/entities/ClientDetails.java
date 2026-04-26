@@ -19,6 +19,9 @@ public class ClientDetails {
     private Long id;
     private boolean premium;
     private Integer points;
+    @OneToOne
+    @JoinColumn(name = "id_client_details")
+    private Client client;
 
     public ClientDetails(boolean premium, Integer points) {
         this.premium = premium;

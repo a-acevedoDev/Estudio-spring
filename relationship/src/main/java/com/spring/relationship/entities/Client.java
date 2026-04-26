@@ -39,8 +39,7 @@ public class Client {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
     private List<Invoice> invoices = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "id_client_details")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
     private ClientDetails clientDetails;
 
     public Client(String name, String lastname) {
