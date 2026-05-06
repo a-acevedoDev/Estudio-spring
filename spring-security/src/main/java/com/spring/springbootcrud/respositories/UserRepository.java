@@ -1,10 +1,9 @@
 package com.spring.springbootcrud.respositories;
 
-import com.spring.springbootcrud.entities.Product;
+import com.spring.springbootcrud.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product,Long> {
-    boolean existsBySku(String sku);
+public interface UserRepository extends CrudRepository<User, Long> {
 }
