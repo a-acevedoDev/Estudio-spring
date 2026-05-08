@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
 
         optionalRoleUser.ifPresent(roles::add);
 
-        if (user.isAdmin()) {
+        if (user.getAdmin()) {
             Optional<Role> optionalRoleAdmin = roleRepository.findByName("ROLE_ADMIN");
             optionalRoleAdmin.ifPresent(roles::add);
         }
@@ -49,6 +49,11 @@ public class UserServiceImpl implements UserService{
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return repository.save(user);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return repository.existsByUsername(username);
     }
 
 }
