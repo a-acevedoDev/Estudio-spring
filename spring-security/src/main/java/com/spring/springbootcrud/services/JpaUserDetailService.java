@@ -30,9 +30,20 @@ public class JpaUserDetailService implements UserDetailsService {
         }
         User user = optionalUser.orElseThrow();
 
-        List<GrantedAuthority> authorities = user.getRoles().stream().
-                map(role -> new SimpleGrantedAuthority(role.getName()))
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> {
+                    String roleName = role.getName();
+                    // Si el rol ya tiene ROLE_, lo dejamos igual, si no, lo agregamos
+                    if (!roleName.startsWith("ROLE_")) {
+                        roleName = "ROLE_" + roleName;
+                    }
+                    System.out.println("Cargando rol: " + roleName); // Debug
+                    return new SimpleGrantedAuthority(roleName);
+                })
                 .collect(Collectors.toList());
+
+        System.out.println("Usuario: " + user.getUsername() + " - Roles: " + authorities); // Debug
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
@@ -41,6 +52,6 @@ public class JpaUserDetailService implements UserDetailsService {
                 true,
                 true,
                 authorities
-                );
+        );
     }
 }

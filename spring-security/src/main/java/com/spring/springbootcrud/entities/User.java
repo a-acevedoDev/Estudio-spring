@@ -28,7 +28,7 @@ public class User {
     private Long id;
 
     // Revisar porque el error
-    // @ExistByUsername
+    @ExistByUsername
     @Column(unique = true)
     @NotBlank
     @Size(min = 4, max = 12)

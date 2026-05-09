@@ -18,8 +18,15 @@ import static com.spring.springbootcrud.security.TokenJwtConfig.*;
 public class JwtValidationFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain) throws ServletException, IOException {
+
+        String requestUri = request.getRequestURI();
+        if (requestUri.equals("/login")) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         String header = request.getHeader(HEADER_AUTHORIZATION);
 
